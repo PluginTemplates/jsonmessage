@@ -1,0 +1,135 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'kr.entree:spigradle:1.2.2'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.2.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'kr.entree.spigradle'
+apply plugin: "com.github.johnrengelman.shadow"
+
+group = "io.github.plugintemplate"
+version = "1.0"
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    jcenter()
+    spigot()
+    jitpack()
+    codemc()
+    maven {
+        url = "https://repo.aikar.co/content/groups/aikar/"
+    }
+    maven {
+        url = "https://dl.bintray.com/portlek/maven"
+    }
+    maven {
+        url = "http://repo.extendedclip.com/content/repositories/placeholderapi/"
+    }
+    maven {
+        url = "http://pex-repo.aoeu.xyz"
+    }
+}
+
+dependencies {
+    // Tools
+    implementation("co.aikar:acf-bukkit:0.5.0-SNAPSHOT")
+    implementation("io.github.portlek:database:1.0")
+    implementation("io.github.portlek:configs-bukkit:1.0")
+    implementation("com.github.cryptomorin:XSeries:5.3.1")
+
+    // Inventory Library is from local maven repository(for now)
+    // Visit https://github.com/MinusKube/SmartInvs/tree/1.3.0
+    // Clone it and run `gradlew clean build` command without
+    // `signing` and `uploadArchives` tasks on the build.gradle
+    // If 1.3.0 was released you don't have to do that.
+    implementation("fr.minuskube.inv:smart-invs:1.3.0")
+
+    // Other Stuffs
+    compileOnly("org.jetbrains:annotations:19.0.0")
+
+    // Main
+    compileOnly bukkit()
+
+    // Hooks
+    compileOnly("me.clip:placeholderapi:2.10.4")
+    compileOnly("org.anjocaido:groupmanagerx:2.2-SNAPSHOT")
+    compileOnly("ru.tehkode:PermissionsEx:1.23.5-SNAPSHOT")
+    compileOnly vault()
+    compileOnly luckPerms()
+}
+
+shadowJar {
+    relocate('co.aikar.commands', this.group + ".bukkitjavagradle.commands")
+    relocate('io.github.portlek.configs', this.group + ".bukkitjavagradle.file")
+    minimize()
+    setArchivesBaseName(this.name)
+    archiveClassifier.set("")
+    archiveVersion.set("")
+}
+
+spigot {
+    description = "Plugin Template for Bukkit on Java with Gradle."
+    apiVersion = "1.13"
+    authors = ["portlek"]
+    softDepends = ["Vault", "GroupManager", "LuckPerms", "PermissionsEx", "PlaceholderAPI"]
+    commands {
+        bukkitjavagradle {
+            description = 'Main command of the plugin.'
+            permission = 'bukkitjavagradle.command.main'
+            permissionMessage = 'You do not have permission!'
+            usage = '/<command> [help|reload|version]'
+            aliases = ['bjg']
+        }
+    }
+    permissions {
+        'bukkigjavagradle.*' {
+            description = 'Allows you to access to the all plugin.'
+            defaults = 'op'
+            children = [
+                'bukkigjavagradle.command.*': true
+            ]
+        }
+        'bukkitjavagradle.command.*' {
+            description = 'It allows you to use to all commands of the plugin.'
+            defaults = 'op'
+            children = [
+                'bukkitjavagradle.command.help'   : true,
+                'bukkitjavagradle.command.reload' : true,
+                'bukkitjavagradle.command.version': true
+            ]
+        }
+        'bukkitjavagradle.version' {
+            description = 'It allows you to notify if there is a new update for the plugin on join.'
+            defaults = 'op'
+        }
+        'bukkitjavagradle.command.main' {
+            description = 'It allows you to use `/bukkitjavagradle` command.'
+            defaults = 'true'
+        }
+        'bukkitjavagradle.command.help' {
+            description = 'It allows you to use to `/bukkitjavagralde help` command.'
+            defaults = 'true'
+        }
+        'bukkitjavagradle.command.reload' {
+            description = 'It allows you to use to `/bukkitjavagradle reload` command.'
+            defaults = 'op'
+        }
+        'bukkitjavagradle.command.version' {
+            description = 'It allows you to use to `/bukkitjavagradle version` command.'
+            defaults = 'op'
+        }
+    }
+}
