@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-// TODO Change the class name as you want.
 public final class JsonMessage extends JavaPlugin {
 
     private static JsonMessageAPI api;
