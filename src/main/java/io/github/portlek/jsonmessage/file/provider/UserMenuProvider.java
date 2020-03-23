@@ -2,7 +2,10 @@ package io.github.portlek.jsonmessage.file.provider;
 
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
+import io.github.portlek.jsonmessage.JsonMessage;
+import io.github.portlek.jsonmessage.handle.User;
 import io.github.portlek.jsonmessage.util.FileElement;
+import java.util.Arrays;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -122,7 +125,59 @@ public final class UserMenuProvider implements InventoryProvider {
 
     @Override
     public void init(final Player player, final InventoryContents contents) {
-
+        final User user = JsonMessage.getAPI().usersFile.getOrCreateUser(player.getUniqueId());
+        Arrays.asList(
+            this.dark_red, this.red, this.gold, this.yellow,
+            this.dark_green, this.green, this.aqua, this.dark_aqua,
+            this.dark_blue, this.blue, this.light_purple, this.dark_purple,
+            this.white, this.gray, this.dark_gray, this.black
+        ).forEach(element -> {
+            element.insert(contents, event -> {
+                event.setCancelled(true);
+                user.setColorCode(element.getColorCode());
+                contents.inventory().open(player);
+            });
+            final boolean check;
+            final int row;
+            final int column;
+            if (element.getColorCode().equals(user.getColorCode())) {
+                row = element.getRow();
+                column = element.getColumn();
+                check = true;
+            } else {
+                row = 0;
+                column = 0;
+                check = false;
+            }
+            if (check) {
+                contents.set(row, column, this.chosen.clickableItem(event -> event.setCancelled(true)));
+            }
+        });
+        Arrays.asList(
+            this.bold, this.strikethrough, this.underline,
+            this.italic, this.reset
+        ).forEach(element -> {
+            element.insert(contents, event -> {
+                event.setCancelled(true);
+                user.setFormatCode(element.getFormatCode());
+                contents.inventory().open(player);
+            });
+            final boolean check;
+            final int row;
+            final int column;
+            if (element.getColorCode().equals(user.getFormatCode())) {
+                row = element.getRow();
+                column = element.getColumn();
+                check = true;
+            } else {
+                row = 0;
+                column = 0;
+                check = false;
+            }
+            if (check) {
+                contents.set(row, column, this.chosen.clickableItem(event -> event.setCancelled(true)));
+            }
+        });
     }
 
     @Override

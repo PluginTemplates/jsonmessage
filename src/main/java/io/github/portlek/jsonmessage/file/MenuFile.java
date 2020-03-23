@@ -101,7 +101,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.RED_STAINED_GLASS_PANE)
                     .name("&4Dark Red")
                     .build(),
-                1, 1
+                1, 1,
+                "&4", ""
             );
 
             @Value
@@ -109,7 +110,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.RED_STAINED_GLASS_PANE)
                     .name("&cRed")
                     .build(),
-                1, 2
+                1, 2,
+                "&c", ""
             );
 
             @Value
@@ -117,7 +119,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.GOLD_BLOCK)
                     .name("&6Gold")
                     .build(),
-                1, 3
+                1, 3,
+                "&6", ""
             );
 
             @Value
@@ -125,7 +128,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.YELLOW_STAINED_GLASS_PANE)
                     .name("&eYellow")
                     .build(),
-                1, 4
+                1, 4,
+                "&e", ""
             );
 
             @Value
@@ -133,7 +137,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.GREEN_STAINED_GLASS_PANE)
                     .name("&2Dark Green")
                     .build(),
-                1, 5
+                1, 5,
+                "&2", ""
             );
 
             @Value
@@ -141,7 +146,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.GREEN_STAINED_GLASS_PANE)
                     .name("&aGreen")
                     .build(),
-                1, 6
+                1, 6,
+                "&a", ""
             );
 
             @Value
@@ -149,7 +155,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.LIGHT_BLUE_STAINED_GLASS_PANE)
                     .name("&bAqua")
                     .build(),
-                1, 7
+                1, 7,
+                "&b", ""
             );
 
             @Value
@@ -157,7 +164,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.BLUE_STAINED_GLASS_PANE)
                     .name("&3Dark Aqua")
                     .build(),
-                2, 0
+                2, 0,
+                "&3", ""
             );
 
             @Value
@@ -165,7 +173,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.BLUE_STAINED_GLASS_PANE)
                     .name("&1Dark Blue")
                     .build(),
-                2, 1
+                2, 1,
+                "&1", ""
             );
 
             @Value
@@ -173,7 +182,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.LIGHT_BLUE_STAINED_GLASS_PANE)
                     .name("&9Blue")
                     .build(),
-                2, 2
+                2, 2,
+                "&9", ""
             );
 
             @Value
@@ -181,7 +191,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.PURPLE_STAINED_GLASS_PANE)
                     .name("&dLight Purple")
                     .build(),
-                2, 3
+                2, 3,
+                "&d", ""
             );
 
             @Value
@@ -189,7 +200,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.PURPLE_STAINED_GLASS_PANE)
                     .name("&5Dark Purple")
                     .build(),
-                2, 4
+                2, 4,
+                "&5", ""
             );
 
             @Value
@@ -197,7 +209,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.WHITE_STAINED_GLASS_PANE)
                     .name("&fWhite")
                     .build(),
-                2, 5
+                2, 5,
+                "&f", ""
             );
 
             @Value
@@ -205,7 +218,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.LIGHT_GRAY_STAINED_GLASS_PANE)
                     .name("&7Gray")
                     .build(),
-                2, 6
+                2, 6,
+                "&7", ""
             );
 
             @Value
@@ -213,7 +227,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.GRAY_STAINED_GLASS_PANE)
                     .name("&8Dark Gray")
                     .build(),
-                2, 7
+                2, 7,
+                "&8", ""
             );
 
             @Value
@@ -221,7 +236,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.BLACK_STAINED_GLASS_PANE)
                     .name("&9Blue")
                     .build(),
-                3, 1
+                3, 1,
+                "&9", ""
             );
 
             @Value
@@ -229,7 +245,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.ORANGE_DYE)
                     .name("&bBold")
                     .build(),
-                4, 3
+                4, 3,
+                "", "&b"
             );
 
             @Value
@@ -237,7 +254,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.ORANGE_DYE)
                     .name("&mStrikethrough")
                     .build(),
-                4, 4
+                4, 4,
+                "", "&m"
             );
 
             @Value
@@ -245,7 +263,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.ORANGE_DYE)
                     .name("&nUnderline")
                     .build(),
-                4, 5
+                4, 5,
+                "", "&n"
             );
 
             @Value
@@ -253,7 +272,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.ORANGE_DYE)
                     .name("&oItalic")
                     .build(),
-                4, 6
+                4, 6,
+                "", "&o"
             );
 
             @Value
@@ -261,7 +281,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.ORANGE_DYE)
                     .name("&rReset")
                     .build(),
-                4, 7
+                4, 7,
+                "", "&r"
             );
 
         }

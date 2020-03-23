@@ -25,16 +25,43 @@ public final class FileElement {
 
     private final int column;
 
+    @NotNull
+    private final String colorCode;
+
+    @NotNull
+    private final String formatCode;
+
     public FileElement(@NotNull final ItemStack itemStack, final int row, final int column) {
+        this(itemStack, row, column, "", "");
+    }
+
+    public FileElement(@NotNull final ItemStack itemStack, final int row, final int column,
+                       @NotNull final String colorCode, @NotNull final String formatCode) {
         this.itemStack = itemStack;
         this.row = row;
         this.column = column;
+        this.colorCode = colorCode;
+        this.formatCode = formatCode;
     }
 
     public FileElement(@NotNull final FileElement fileElement) {
-        this.itemStack = fileElement.itemStack;
-        this.row = fileElement.row;
-        this.column = fileElement.column;
+        this(
+            fileElement.itemStack,
+            fileElement.row,
+            fileElement.column,
+            fileElement.colorCode,
+            fileElement.formatCode
+        );
+    }
+
+    @NotNull
+    public String getColorCode() {
+        return this.colorCode;
+    }
+
+    @NotNull
+    public String getFormatCode() {
+        return this.formatCode;
     }
 
     public void insert(@NotNull final InventoryContents contents, @NotNull final Consumer<InventoryClickEvent> consumer) {
