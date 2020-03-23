@@ -61,12 +61,12 @@ public final class JsonMessage extends JavaPlugin {
                 api.reloadPlugin(true)
             )
         );
-        manager.getCommandConditions().addCondition(String[].class, "player", (c, exec, value) -> {
+        manager.getCommandConditions().addCondition(String[].class, "player", (context, exec, value) -> {
             if (value == null || value.length == 0) {
                 return;
             }
-            final String name = value[c.getConfigValue("arg", 0)];
-            if (c.hasConfig("arg") && Bukkit.getPlayer(name) == null) {
+            final String name = value[context.getConfigValue("arg", 0)];
+            if (context.hasConfig("arg") && Bukkit.getPlayer(name) == null) {
                 throw new ConditionFailedException(
                     api.languageFile.errors.player_not_found.build("%player_name%", () -> name)
                 );
