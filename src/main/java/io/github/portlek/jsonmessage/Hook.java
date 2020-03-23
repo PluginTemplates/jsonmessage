@@ -1,4 +1,4 @@
-package io.github.plugintemplate.bukkitjavagradle;
+package io.github.portlek.jsonmessage;
 
 import org.jetbrains.annotations.NotNull;
 

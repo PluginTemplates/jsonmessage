@@ -1,4 +1,4 @@
-package io.github.plugintemplate.bukkitjavagradle.util;
+package io.github.portlek.jsonmessage.util;
 
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.content.InventoryContents;
@@ -110,7 +110,6 @@ public final class FileElement {
         return this.column;
     }
 
-    // TODO Don't forget the registering that provider into a file class in #load() method.
     public static class Provider implements Provided<FileElement> {
 
         @Override

@@ -1,7 +1,7 @@
-package io.github.plugintemplate.bukkitjavagradle.hooks;
+package io.github.portlek.jsonmessage.hooks;
 
-import io.github.plugintemplate.bukkitjavagradle.Hook;
-import io.github.plugintemplate.bukkitjavagradle.Wrapped;
+import io.github.portlek.jsonmessage.Hook;
+import io.github.portlek.jsonmessage.Wrapped;
 import org.anjocaido.groupmanager.GroupManager;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;

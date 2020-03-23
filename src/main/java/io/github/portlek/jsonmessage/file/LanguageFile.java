@@ -1,4 +1,4 @@
-package io.github.plugintemplate.bukkitjavagradle.file;
+package io.github.portlek.jsonmessage.file;
 
 import io.github.portlek.configs.BukkitLinkedManaged;
 import io.github.portlek.configs.annotations.*;
@@ -14,8 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 @LinkedConfig(configs = @Config(
     name = "en",
-    // TODO: Change the plugin data folder as you want.
-    location = "%basedir%/BukkitJavaGradle/languages"
+    location = "%basedir%/JsonMessage/languages"
 ))
 public final class LanguageFile extends BukkitLinkedManaged {
 
@@ -31,10 +30,9 @@ public final class LanguageFile extends BukkitLinkedManaged {
             return Optional.of(
                 Replaceable.of(
                     "&a====== %prefix% &a======",
-                    "&7/bukkitjavagradle &r> &eShows help message.",
-                    "&7/bukkitjavagradle help &r> &eShows help message.",
-                    "&7/bukkitjavagradle reload &r> &eReloads the plugin.",
-                    "&7/bukkitjavagradle version &r> &eChecks for update."
+                    "&7/jsonmessage &r> &eShows help message.",
+                    "&7/jsonmessage help &r> &eShows help message.",
+                    "&7/jsonmessage reload &r> &eReloads the plugin."
                 )
                     .map(ColorUtil::colored)
                     .replace(this.getPrefix())
@@ -86,32 +84,6 @@ public final class LanguageFile extends BukkitLinkedManaged {
                         .map(ColorUtil::colored)
                         .replace(LanguageFile.this.getPrefix())
                         .replaces("%ms%")
-                );
-            }
-            return Optional.empty();
-        });
-
-        @Value
-        public Replaceable<String> new_version_found = LanguageFile.this.match(s -> {
-            if ("en".equals(s)) {
-                return Optional.of(
-                    Replaceable.of("%prefix% &eNew version found (v%version%)")
-                        .map(ColorUtil::colored)
-                        .replaces("%version%")
-                        .replace(LanguageFile.this.getPrefix())
-                );
-            }
-            return Optional.empty();
-        });
-
-        @Value
-        public Replaceable<String> latest_version = LanguageFile.this.match(s -> {
-            if ("en".equals(s)) {
-                return Optional.of(
-                    Replaceable.of("%prefix% &aYou''re using the latest version (v%version%)")
-                        .map(ColorUtil::colored)
-                        .replaces("%version%")
-                        .replace(LanguageFile.this.getPrefix())
                 );
             }
             return Optional.empty();

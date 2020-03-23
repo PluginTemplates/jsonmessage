@@ -1,49 +1,49 @@
-package io.github.plugintemplate.bukkitjavagradle;
+package io.github.portlek.jsonmessage;
 
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.ConditionFailedException;
-import io.github.plugintemplate.bukkitjavagradle.commands.BukkitJavaGradleCommand;
+import io.github.portlek.jsonmessage.commands.JsonMessageCommand;
 import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 // TODO Change the class name as you want.
-public final class BukkitJavaGradle extends JavaPlugin {
+public final class JsonMessage extends JavaPlugin {
 
-    private static BukkitJavaGradleAPI api;
+    private static JsonMessageAPI api;
 
-    private static BukkitJavaGradle instance;
+    private static JsonMessage instance;
 
     @NotNull
-    public static BukkitJavaGradle getInstance() {
-        return Optional.ofNullable(BukkitJavaGradle.instance).orElseThrow(() ->
-            new IllegalStateException("You cannot be used BukkitJavaGradle plugin before its start!")
+    public static JsonMessage getInstance() {
+        return Optional.ofNullable(JsonMessage.instance).orElseThrow(() ->
+            new IllegalStateException("You cannot be used JsonMessage plugin before its start!")
         );
     }
 
-    private void setInstance(@NotNull final BukkitJavaGradle instance) {
-        if (Optional.ofNullable(BukkitJavaGradle.instance).isPresent()) {
+    private void setInstance(@NotNull final JsonMessage instance) {
+        if (Optional.ofNullable(JsonMessage.instance).isPresent()) {
             throw new IllegalStateException("You can't use #setInstance method twice!");
         }
         synchronized (this) {
-            BukkitJavaGradle.instance = instance;
+            JsonMessage.instance = instance;
         }
     }
 
     @NotNull
-    public static BukkitJavaGradleAPI getAPI() {
-        return Optional.ofNullable(BukkitJavaGradle.api).orElseThrow(() ->
-            new IllegalStateException("You cannot be used BukkitJavaGradle plugin before its start!")
+    public static JsonMessageAPI getAPI() {
+        return Optional.ofNullable(JsonMessage.api).orElseThrow(() ->
+            new IllegalStateException("You cannot be used JsonMessage plugin before its start!")
         );
     }
 
-    private void setAPI(@NotNull final BukkitJavaGradleAPI loader) {
-        if (Optional.ofNullable(BukkitJavaGradle.api).isPresent()) {
+    private void setAPI(@NotNull final JsonMessageAPI loader) {
+        if (Optional.ofNullable(JsonMessage.api).isPresent()) {
             throw new IllegalStateException("You can't use #setAPI method twice!");
         }
         synchronized (this) {
-            BukkitJavaGradle.api = loader;
+            JsonMessage.api = loader;
         }
     }
 
@@ -53,16 +53,9 @@ public final class BukkitJavaGradle extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
-        if (BukkitJavaGradle.api != null) {
-            BukkitJavaGradle.api.disablePlugin();
-        }
-    }
-
-    @Override
     public void onEnable() {
         final BukkitCommandManager manager = new BukkitCommandManager(this);
-        final BukkitJavaGradleAPI api = new BukkitJavaGradleAPI(this);
+        final JsonMessageAPI api = new JsonMessageAPI(this);
         this.setAPI(api);
         this.getServer().getScheduler().runTask(this, () ->
             this.getServer().getScheduler().runTaskAsynchronously(this, () ->
@@ -80,9 +73,7 @@ public final class BukkitJavaGradle extends JavaPlugin {
                 );
             }
         });
-        manager.registerCommand(
-            new BukkitJavaGradleCommand(api)
-        );
+        manager.registerCommand(new JsonMessageCommand(api));
     }
 
 }

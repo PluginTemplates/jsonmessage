@@ -1,2 +1,2 @@
-# BukkitJavaGradle
-Plugin template for Bukkit on Java with Gradle.
+# JsonMessage
+JsonMessage plugin for Bukkit on Java with Gradle.

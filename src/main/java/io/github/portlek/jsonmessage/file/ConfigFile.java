@@ -1,9 +1,5 @@
-package io.github.plugintemplate.bukkitjavagradle.file;
+package io.github.portlek.jsonmessage.file;
 
-import io.github.plugintemplate.bukkitjavagradle.BukkitJavaGradle;
-import io.github.plugintemplate.bukkitjavagradle.Hook;
-import io.github.plugintemplate.bukkitjavagradle.Wrapped;
-import io.github.plugintemplate.bukkitjavagradle.hooks.*;
 import io.github.portlek.configs.BukkitManaged;
 import io.github.portlek.configs.annotations.Config;
 import io.github.portlek.configs.annotations.Instance;
@@ -11,11 +7,12 @@ import io.github.portlek.configs.annotations.Section;
 import io.github.portlek.configs.annotations.Value;
 import io.github.portlek.configs.util.ColorUtil;
 import io.github.portlek.configs.util.Replaceable;
-import io.github.portlek.database.Database;
-import io.github.portlek.database.SQL;
-import io.github.portlek.database.database.MySQL;
-import io.github.portlek.database.database.SQLite;
-import io.github.portlek.database.sql.SQLBasic;
+import io.github.portlek.jsonmessage.Hook;
+import io.github.portlek.jsonmessage.Wrapped;
+import io.github.portlek.jsonmessage.hooks.GroupManagerHook;
+import io.github.portlek.jsonmessage.hooks.LuckPermsHook;
+import io.github.portlek.jsonmessage.hooks.PermissionsExHook;
+import io.github.portlek.jsonmessage.hooks.PlaceholderAPIHook;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -25,12 +22,10 @@ import org.jetbrains.annotations.NotNull;
 
 @Config(
     name = "config",
-    // TODO: Change the plugin data folder as you want.
-    location = "%basedir%/BukkitJavaGradle"
+    location = "%basedir%/JsonMessage"
 )
 public final class ConfigFile extends BukkitManaged {
 
-    // Hook Paths
     private static final String HOOKS_PATH = "hooks.";
 
     private static final String PLACEHOLDER_API = "PlaceholderAPI";
@@ -41,21 +36,13 @@ public final class ConfigFile extends BukkitManaged {
 
     private static final String PERMISSIONS_EX = "PermissionsEx";
 
-    private static final String VAULT = "Vault";
-
-    // Instances
-    @Instance
-    public final ConfigFile.Saving saving = new ConfigFile.Saving();
-
     @Instance
     public final ConfigFile.Hooks hooks = new ConfigFile.Hooks();
 
-    // Wrapped map.
     private final Map<String, Wrapped> wrapped = new HashMap<>();
 
-    // TODO: Change the plugin prefix as you want.
     @Value
-    public Replaceable<String> plugin_prefix = Replaceable.of("&6[&eBukkitJavaGradle&6]")
+    public Replaceable<String> plugin_prefix = Replaceable.of("&6[&eJsonMessage&6]")
         .map(ColorUtil::colored);
 
     @Value
@@ -69,29 +56,6 @@ public final class ConfigFile extends BukkitManaged {
         super.load();
         this.loadWrapped();
         this.setAutoSave(true);
-    }
-
-    @NotNull
-    public SQL createSQL() {
-        final Database database;
-        if (this.isMySQL()) {
-            database = new MySQL(
-                this.saving.mysql.host,
-                this.saving.mysql.port,
-                this.saving.mysql.database,
-                this.saving.mysql.username,
-                this.saving.mysql.password
-            );
-        } else {
-            database = new SQLite(BukkitJavaGradle.getInstance(), "bukkitjavagradle.db");
-        }
-        return new SQLBasic(database);
-    }
-
-    private boolean isMySQL() {
-        return this.saving.storage_type.equalsIgnoreCase("mysql") ||
-            this.saving.storage_type.equalsIgnoreCase("remote") ||
-            this.saving.storage_type.equalsIgnoreCase("net");
     }
 
     @NotNull
@@ -142,15 +106,6 @@ public final class ConfigFile extends BukkitManaged {
                 this.hooks.PermissionsEX = false;
                 this.set(ConfigFile.HOOKS_PATH + ConfigFile.PERMISSIONS_EX, false);
             });
-        this.hookLittle(this.hooks.Vault, new VaultHook(), ConfigFile.VAULT,
-            () -> {
-                this.hooks.Vault = true;
-                this.set(ConfigFile.HOOKS_PATH + ConfigFile.VAULT, true);
-            },
-            () -> {
-                this.hooks.Vault = false;
-                this.set(ConfigFile.HOOKS_PATH + ConfigFile.VAULT, true);
-            });
     }
 
     private void hookLittle(final boolean force, @NotNull final Hook hook, @NotNull final String path, @NotNull final Runnable succeed,
@@ -173,51 +128,10 @@ public final class ConfigFile extends BukkitManaged {
 
     private void sendHookNotify(@NotNull final String path) {
         Bukkit.getConsoleSender().sendMessage(
-            // TODO Change the message as you want.
             ColorUtil.colored(
                 this.plugin_prefix.build() + " &r>> &a" + path + " is hooking"
             )
         );
-    }
-
-    @Section(path = "saving")
-    public static final class Saving {
-
-        @Instance
-        public final ConfigFile.Saving.MySQL mysql = new ConfigFile.Saving.MySQL();
-
-        @Value
-        public String storage_type = "sqlite";
-
-        @Value
-        public boolean save_when_plugin_disable = true;
-
-        @Value
-        public boolean auto_save = true;
-
-        @Value
-        public int auto_save_time = 60;
-
-        @Section(path = "mysql")
-        public static final class MySQL {
-
-            @Value
-            public String host = "localhost";
-
-            @Value
-            public int port = 3306;
-
-            @Value
-            public String database = "database";
-
-            @Value
-            public String username = "username";
-
-            @Value
-            public String password = "password";
-
-        }
-
     }
 
     @Section(path = "hooks")

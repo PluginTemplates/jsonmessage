@@ -1,6 +1,6 @@
-package io.github.plugintemplate.bukkitjavagradle.hooks;
+package io.github.portlek.jsonmessage.hooks;
 
-import io.github.plugintemplate.bukkitjavagradle.Wrapped;
+import io.github.portlek.jsonmessage.Wrapped;
 import java.util.List;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

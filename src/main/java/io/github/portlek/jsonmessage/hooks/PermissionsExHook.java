@@ -1,6 +1,6 @@
-package io.github.plugintemplate.bukkitjavagradle.hooks;
+package io.github.portlek.jsonmessage.hooks;
 
-import io.github.plugintemplate.bukkitjavagradle.Hook;
+import io.github.portlek.jsonmessage.Hook;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import ru.tehkode.permissions.bukkit.PermissionsEx;

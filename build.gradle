@@ -16,7 +16,7 @@ apply plugin: 'maven'
 apply plugin: 'kr.entree.spigradle'
 apply plugin: "com.github.johnrengelman.shadow"
 
-group = "io.github.plugintemplate"
+group = "io.github.portlek"
 version = "1.0"
 
 sourceCompatibility = '1.8'
@@ -46,9 +46,8 @@ repositories {
 dependencies {
     // Tools
     implementation("co.aikar:acf-bukkit:0.5.0-SNAPSHOT")
-    implementation("io.github.portlek:database:1.0")
     implementation("io.github.portlek:configs-bukkit:1.0")
-    implementation("com.github.cryptomorin:XSeries:5.3.1")
+    implementation("io.github.portlek:mc-json:1.4")
 
     // Inventory Library is from local maven repository(for now)
     // Visit https://github.com/MinusKube/SmartInvs/tree/1.3.0
@@ -67,13 +66,12 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.10.4")
     compileOnly("org.anjocaido:groupmanagerx:2.2-SNAPSHOT")
     compileOnly("ru.tehkode:PermissionsEx:1.23.5-SNAPSHOT")
-    compileOnly vault()
     compileOnly luckPerms()
 }
 
 shadowJar {
-    relocate('co.aikar.commands', this.group + ".bukkitjavagradle.commands")
-    relocate('io.github.portlek.configs', this.group + ".bukkitjavagradle.file")
+    relocate('co.aikar.commands', this.group + ".jsonmessage.commands")
+    relocate('io.github.portlek.configs', this.group + ".jsonmessage.file")
     minimize()
     setArchivesBaseName(this.name)
     archiveClassifier.set("")
@@ -81,54 +79,45 @@ shadowJar {
 }
 
 spigot {
-    description = "Plugin Template for Bukkit on Java with Gradle."
+    description = "JsonMessage plugin for Bukkit on Java with Gradle."
     apiVersion = "1.13"
     authors = ["portlek"]
     softDepends = ["Vault", "GroupManager", "LuckPerms", "PermissionsEx", "PlaceholderAPI"]
     commands {
-        bukkitjavagradle {
+        jsonmessage {
             description = 'Main command of the plugin.'
-            permission = 'bukkitjavagradle.command.main'
+            permission = 'jsonmessage.command.main'
             permissionMessage = 'You do not have permission!'
             usage = '/<command> [help|reload|version]'
             aliases = ['bjg']
         }
     }
     permissions {
-        'bukkigjavagradle.*' {
+        'jsonmessage.*' {
             description = 'Allows you to access to the all plugin.'
             defaults = 'op'
             children = [
-                'bukkigjavagradle.command.*': true
+                'jsonmessage.command.*': true
             ]
         }
-        'bukkitjavagradle.command.*' {
+        'jsonmessage.command.*' {
             description = 'It allows you to use to all commands of the plugin.'
             defaults = 'op'
             children = [
-                'bukkitjavagradle.command.help'   : true,
-                'bukkitjavagradle.command.reload' : true,
-                'bukkitjavagradle.command.version': true
+                'jsonmessage.command.help'   : true,
+                'jsonmessage.command.reload' : true
             ]
         }
-        'bukkitjavagradle.version' {
-            description = 'It allows you to notify if there is a new update for the plugin on join.'
-            defaults = 'op'
-        }
-        'bukkitjavagradle.command.main' {
-            description = 'It allows you to use `/bukkitjavagradle` command.'
+        'jsonmessage.command.main' {
+            description = 'It allows you to use `/jsonmessage` command.'
             defaults = 'true'
         }
-        'bukkitjavagradle.command.help' {
-            description = 'It allows you to use to `/bukkitjavagralde help` command.'
+        'jsonmessage.command.help' {
+            description = 'It allows you to use to `/jsonmessage help` command.'
             defaults = 'true'
         }
-        'bukkitjavagradle.command.reload' {
-            description = 'It allows you to use to `/bukkitjavagradle reload` command.'
-            defaults = 'op'
-        }
-        'bukkitjavagradle.command.version' {
-            description = 'It allows you to use to `/bukkitjavagradle version` command.'
+        'jsonmessage.command.reload' {
+            description = 'It allows you to use to `/jsonmessage reload` command.'
             defaults = 'op'
         }
     }
