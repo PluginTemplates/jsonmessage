@@ -31,13 +31,23 @@ public final class FormatFile {
     }
 
     @NotNull
+    public BukkitManaged getManaged() {
+        return this.managed;
+    }
+
+    @NotNull
     public List<Message> loadMessages() {
+        return this.loadMessages(false);
+    }
+
+    @NotNull
+    public List<Message> loadMessages(final boolean ismessage) {
         final List<Message> messages = new ArrayList<>();
         this.managed.getOrCreateSection("components").ifPresent(section ->
             section.getKeys(false).forEach(key ->
                 messages.add(new Message(
                     (user, message) -> this.replaceAll(user, this.managed.getOrSet("components." + key + ".text", ""), message),
-                    (user, message) -> this.parseFeatures(user, message, key)
+                    (user, message) -> this.parseFeatures(user, message, key, ismessage)
                 ))
             )
         );
@@ -65,7 +75,7 @@ public final class FormatFile {
 
     @NotNull
     private List<JsonFeature> parseFeatures(@NotNull final User user, @NotNull final String message,
-                                            @NotNull final String key) {
+                                            @NotNull final String key, final boolean ismessage) {
         final Optional<Player> userOptional = user.getPlayer();
         if (!userOptional.isPresent()) {
             return Collections.emptyList();
@@ -73,17 +83,17 @@ public final class FormatFile {
         final String path = "components." + key + '.';
         final List<JsonFeature> features = new ArrayList<>();
         final String color;
-        if (user.color()) {
-            color = user.getColorCode();
+        if (ismessage && user.color()) {
+            color = user.getColorName();
         } else {
             color = this.managed.getOrSet(path + "color", "");
         }
         final String insertion = this.managed.getOrSet(path + "insertion", "");
-        final boolean underlined = user.underlined() || this.managed.getOrSet(path + "underlined", false);
-        final boolean strikethrough = user.strikethrough() || this.managed.getOrSet(path + "strikethrough", false);
+        final boolean underlined = ismessage && user.underlined() || this.managed.getOrSet(path + "underlined", false);
+        final boolean strikethrough = ismessage && user.strikethrough() || this.managed.getOrSet(path + "strikethrough", false);
         final boolean obfuscated = this.managed.getOrSet(path + "obfuscated", false);
-        final boolean italic = user.italic() || this.managed.getOrSet(path + "italic", false);
-        final boolean bold = user.bold() || this.managed.getOrSet(path + "bold", false);
+        final boolean italic = ismessage && user.italic() || this.managed.getOrSet(path + "italic", false);
+        final boolean bold = ismessage && user.bold() || this.managed.getOrSet(path + "bold", false);
         if (!color.isEmpty()) {
             features.add(new ColorFeature(color));
         }

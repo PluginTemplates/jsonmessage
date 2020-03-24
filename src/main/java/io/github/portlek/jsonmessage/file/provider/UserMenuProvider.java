@@ -141,7 +141,7 @@ public final class UserMenuProvider implements InventoryProvider {
                 final boolean check;
                 final int row;
                 final int column;
-                if (element.getColorCode().equals(user.getColorCode())) {
+                if (!user.getColorCode().isEmpty() && element.getColorCode().equals(user.getColorCode())) {
                     row = element.getRow();
                     column = element.getColumn();
                     check = true;
@@ -168,7 +168,7 @@ public final class UserMenuProvider implements InventoryProvider {
                 final boolean check;
                 final int row;
                 final int column;
-                if (element.getColorCode().equals(user.getFormatCode())) {
+                if (!user.getFormatCode().isEmpty() && element.getFormatCode().equals(user.getFormatCode())) {
                     row = element.getRow();
                     column = element.getColumn();
                     check = true;

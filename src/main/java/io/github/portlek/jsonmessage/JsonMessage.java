@@ -54,15 +54,13 @@ public final class JsonMessage extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        new JMPlaceholder().register();
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new JMPlaceholder().register();
+        }
         final BukkitCommandManager manager = new BukkitCommandManager(this);
         final JsonMessageAPI api = new JsonMessageAPI(this);
         this.setAPI(api);
-        this.getServer().getScheduler().runTask(this, () ->
-            this.getServer().getScheduler().runTaskAsynchronously(this, () ->
-                api.reloadPlugin(true)
-            )
-        );
+        api.reloadPlugin(true);
         manager.getCommandConditions().addCondition(String[].class, "player", (context, exec, value) -> {
             if (value == null || value.length == 0) {
                 return;

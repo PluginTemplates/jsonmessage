@@ -234,19 +234,19 @@ public final class MenuFile extends BukkitManaged {
             @Value
             public FileElement black = new FileElement(
                 BukkitItemBuilder.of(XMaterial.BLACK_STAINED_GLASS_PANE)
-                    .name("&9Blue")
+                    .name("&0Black")
                     .build(),
                 3, 2,
-                "&9", "", "jsonmessage.user.black"
+                "&0", "", "jsonmessage.user.black"
             );
 
             @Value
             public FileElement bold = new FileElement(
                 BukkitItemBuilder.of(XMaterial.ORANGE_DYE)
-                    .name("&bBold")
+                    .name("&lBold")
                     .build(),
                 4, 1,
-                "", "&b", "jsonmessage.user.bold"
+                "", "&l", "jsonmessage.user.bold"
             );
 
             @Value

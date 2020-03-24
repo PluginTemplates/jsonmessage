@@ -23,6 +23,44 @@ public final class User {
         this.formatCode = formatCode;
     }
 
+    @NotNull
+    public String getColorName() {
+        switch (this.colorCode) {
+            case "&4":
+                return "dark_red";
+            case "&c":
+                return "red";
+            case "&6":
+                return "gold";
+            case "&e":
+                return "yellow";
+            case "&2":
+                return "dark_green";
+            case "&a":
+                return "green";
+            case "&b":
+                return "dark_aqua";
+            case "&1":
+                return "dark_blue";
+            case "&9":
+                return "blue";
+            case "&d":
+                return "light_purple";
+            case "&5":
+                return "dark_purple";
+            case "&f":
+                return "white";
+            case "&7":
+                return "gray";
+            case "&8":
+                return "dark_gray";
+            case "&0":
+                return "black";
+            default:
+                return "reset";
+        }
+    }
+
     public void reset() {
         this.setColorCode("");
         this.setFormatCode("");

@@ -1,6 +1,7 @@
 package io.github.portlek.jsonmessage.file;
 
 import io.github.portlek.configs.BukkitManaged;
+import io.github.portlek.configs.Managed;
 import io.github.portlek.configs.annotations.Config;
 import io.github.portlek.configs.annotations.Instance;
 import io.github.portlek.configs.annotations.Section;
@@ -51,8 +52,62 @@ public final class FormatsFile extends BukkitManaged {
         final FormatFile defaultPlayer = new FormatFile(this.createManaged(this.def.player));
         final FormatFile defaultSuffix = new FormatFile(this.createManaged(this.def.suffix));
         final FormatFile defaultMessage = new FormatFile(this.createManaged(this.def.message));
+        if (!defaultPrefix.getManaged().getSection("components").isPresent()) {
+            final Managed managed = defaultPrefix.getManaged();
+            managed.set("components.0.text", "[");
+            managed.set("components.0.color", "gold");
+            managed.set("components.0.hover.action", "SHOW_TEXT");
+            managed.set("components.0.hover.value", "This is prefix");
+            managed.set("components.1.text", "Guest");
+            managed.set("components.1.hover.action", "SHOW_TEXT");
+            managed.set("components.1.hover.value", "This is prefix");
+            managed.set("components.2.text", "] ");
+            managed.set("components.2.color", "gold");
+            managed.set("components.2.hover.action", "SHOW_TEXT");
+            managed.set("components.2.hover.value", "This is suffix");
+        }
+        if (!defaultPlayer.getManaged().getSection("components").isPresent()) {
+            final Managed managed = defaultPlayer.getManaged();
+            managed.set("components.0.text", "%player_name% ");
+            managed.set("components.0.color", "gray");
+            managed.set("components.0.hover.action", "SHOW_TEXT");
+            managed.set("components.0.hover.value", "&7Player name > &e%player_name%\n&7Player money > &e%vault_eco_balance%");
+            managed.set("components.0.click.action", "RUN_CONSUMER");
+            managed.set("components.0.click.commands.0.as-player", false);
+            managed.set("components.0.click.commands.0.placeholderapi-mode", "clicker");
+            managed.set("components.0.click.commands.0.values", Arrays.asList(
+                "give %player_name% apple",
+                "msg %player_name% You clicked the message of %writer% and gain rewards"
+            ));
+            managed.set("components.0.click.commands.1.as-player", false);
+            managed.set("components.0.click.commands.1.placeholderapi-mode", "writer");
+            managed.set("components.0.click.commands.1.values", Arrays.asList(
+                "give %player_name% apple",
+                "msg %player_name% %clicker% clicked your message and gain rewards"
+            ));
+        }
+        if (!defaultSuffix.getManaged().getSection("components").isPresent()) {
+            final Managed managed = defaultSuffix.getManaged();
+            managed.set("components.0.text", "> ");
+            managed.set("components.0.color", "reset");
+        }
+        if (!defaultMessage.getManaged().getSection("components").isPresent()) {
+            final Managed managed = defaultMessage.getManaged();
+            managed.set("components.0.text", "%message%");
+            managed.set("components.0.color", "yellow");
+            managed.set("components.0.hover.action", "SHOW_TEXT");
+            managed.set("components.0.hover.value", "&7Player message > &e%message%");
+            managed.set("components.0.hover.value", "&7Player message > &e%message%");
+            managed.set("components.0.click.action", "RUN_CONSUMER");
+            managed.set("components.0.click.remove-after-click", true);
+            managed.set("components.0.click.commands.0.as-player", false);
+            managed.set("components.0.click.commands.0.placeholderapi-mode", "writer");
+            managed.set("components.0.click.commands.0.values", Collections.singletonList(
+                "msg %player_name% %clicker% clicked your message!"
+            ));
+        }
         FormatsFile.GROUPS.put(
-            "default_shop",
+            "default_group",
             new Group(
                 "default_group",
                 new Format(
@@ -60,7 +115,7 @@ public final class FormatsFile extends BukkitManaged {
                         defaultPrefix.loadMessages(),
                         defaultPlayer.loadMessages(),
                         defaultSuffix.loadMessages(),
-                        defaultMessage.loadMessages()
+                        defaultMessage.loadMessages(true)
                     )
                 )
             )
@@ -80,7 +135,7 @@ public final class FormatsFile extends BukkitManaged {
                                 prefix.loadMessages(),
                                 player.loadMessages(),
                                 suffix.loadMessages(),
-                                message.loadMessages()
+                                message.loadMessages(true)
                             )
                         )
                     )
@@ -101,6 +156,8 @@ public final class FormatsFile extends BukkitManaged {
             file,
             FileType.JSON.load(file)
         );
+        managed.save();
+        managed.setAutoSave(true);
         return managed;
     }
 
@@ -127,7 +184,7 @@ public final class FormatsFile extends BukkitManaged {
             .findFirst();
     }
 
-    @Section(path = "default")
+    @Section(path = "default_sroup")
     public static final class Default {
 
         @Value

@@ -152,24 +152,25 @@ public final class FileElement {
 
         @Override
         public void set(@NotNull final FileElement fileElement, @NotNull final Managed managed, @NotNull final String s) {
-            final BukkitManaged bukkitManaged = (BukkitManaged) managed;
-            bukkitManaged.set(s + ".row", fileElement.row);
-            bukkitManaged.set(s + ".column", fileElement.column);
-            bukkitManaged.setItemStack(s, fileElement.itemStack);
+            managed.set(s + ".row", fileElement.row);
+            managed.set(s + ".column", fileElement.column);
+            managed.set(s + ".color-code", fileElement.colorCode);
+            managed.set(s + ".format-code", fileElement.formatCode);
+            managed.set(s + ".permission", fileElement.permission);
+            ((BukkitManaged) managed).setItemStack(s, fileElement.itemStack);
         }
 
         @NotNull
         @Override
         public Optional<FileElement> get(@NotNull final Managed managed, @NotNull final String s) {
-            if (!s.contains("element") || !managed.getSection(s).isPresent()) {
-                return Optional.empty();
-            }
-            final BukkitManaged bukkitManaged = (BukkitManaged) managed;
-            return bukkitManaged.getItemStack(s).map(stack ->
+            return ((BukkitManaged) managed).getItemStack(s).map(stack ->
                 new FileElement(
                     stack,
-                    bukkitManaged.getInt(s + ".row"),
-                    bukkitManaged.getInt(s + ".column")
+                    managed.getInt(s + ".row"),
+                    managed.getInt(s + ".column"),
+                    managed.getString(s + ".color-code").orElse(""),
+                    managed.getString(s + ".format-code").orElse(""),
+                    managed.getString(s + ".permission").orElse("")
                 )
             );
         }
