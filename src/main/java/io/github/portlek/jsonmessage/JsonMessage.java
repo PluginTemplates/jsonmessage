@@ -3,6 +3,7 @@ package io.github.portlek.jsonmessage;
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.ConditionFailedException;
 import io.github.portlek.jsonmessage.commands.JsonMessageCommand;
+import io.github.portlek.jsonmessage.papi.JMPlaceholder;
 import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -53,6 +54,7 @@ public final class JsonMessage extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        new JMPlaceholder().register();
         final BukkitCommandManager manager = new BukkitCommandManager(this);
         final JsonMessageAPI api = new JsonMessageAPI(this);
         this.setAPI(api);

@@ -82,7 +82,7 @@ spigot {
     description = "JsonMessage plugin for Bukkit on Java with Gradle."
     apiVersion = "1.13"
     authors = ["portlek"]
-    softDepends = ["Vault", "GroupManager", "LuckPerms", "PermissionsEx", "PlaceholderAPI"]
+    softDepends = ["GroupManager", "LuckPerms", "PermissionsEx", "PlaceholderAPI"]
     commands {
         jsonmessage {
             description = 'Main command of the plugin.'

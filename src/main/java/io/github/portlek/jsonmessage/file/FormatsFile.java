@@ -95,7 +95,7 @@ public final class FormatsFile extends BukkitManaged {
         };
         final File file = new CreateStorage(
             JsonMessage.getInstance().getDataFolder().getAbsolutePath() + File.separator + "formats",
-            filename + ".yml"
+            filename + ".json"
         ).value();
         managed.setup(
             file,
