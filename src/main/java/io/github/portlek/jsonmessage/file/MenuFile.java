@@ -102,7 +102,7 @@ public final class MenuFile extends BukkitManaged {
                     .name("&4Dark Red")
                     .build(),
                 1, 1,
-                "&4", ""
+                "&4", "", "jsonmessage.user.dark_red"
             );
 
             @Value
@@ -111,7 +111,7 @@ public final class MenuFile extends BukkitManaged {
                     .name("&cRed")
                     .build(),
                 1, 2,
-                "&c", ""
+                "&c", "", "jsonmessage.user.red"
             );
 
             @Value
@@ -120,7 +120,7 @@ public final class MenuFile extends BukkitManaged {
                     .name("&6Gold")
                     .build(),
                 1, 3,
-                "&6", ""
+                "&6", "", "jsonmessage.user.gold"
             );
 
             @Value
@@ -129,7 +129,7 @@ public final class MenuFile extends BukkitManaged {
                     .name("&eYellow")
                     .build(),
                 1, 4,
-                "&e", ""
+                "&e", "", "jsonmessage.user.yellow"
             );
 
             @Value
@@ -138,7 +138,7 @@ public final class MenuFile extends BukkitManaged {
                     .name("&2Dark Green")
                     .build(),
                 1, 5,
-                "&2", ""
+                "&2", "", "jsonmessage.user.dark_green"
             );
 
             @Value
@@ -147,7 +147,7 @@ public final class MenuFile extends BukkitManaged {
                     .name("&aGreen")
                     .build(),
                 1, 6,
-                "&a", ""
+                "&a", "", "jsonmessage.user.green"
             );
 
             @Value
@@ -156,7 +156,7 @@ public final class MenuFile extends BukkitManaged {
                     .name("&bAqua")
                     .build(),
                 1, 7,
-                "&b", ""
+                "&b", "", "jsonmessage.user.aqua"
             );
 
             @Value
@@ -164,8 +164,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.BLUE_STAINED_GLASS_PANE)
                     .name("&3Dark Aqua")
                     .build(),
-                2, 0,
-                "&3", ""
+                2, 1,
+                "&3", "", "jsonmessage.user.dark_aqua"
             );
 
             @Value
@@ -173,8 +173,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.BLUE_STAINED_GLASS_PANE)
                     .name("&1Dark Blue")
                     .build(),
-                2, 1,
-                "&1", ""
+                2, 2,
+                "&1", "", "jsonmessage.user.dark_blue"
             );
 
             @Value
@@ -182,8 +182,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.LIGHT_BLUE_STAINED_GLASS_PANE)
                     .name("&9Blue")
                     .build(),
-                2, 2,
-                "&9", ""
+                2, 3,
+                "&9", "", "jsonmessage.user.blue"
             );
 
             @Value
@@ -191,8 +191,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.PURPLE_STAINED_GLASS_PANE)
                     .name("&dLight Purple")
                     .build(),
-                2, 3,
-                "&d", ""
+                2, 4,
+                "&d", "", "jsonmessage.user.light_purple"
             );
 
             @Value
@@ -200,8 +200,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.PURPLE_STAINED_GLASS_PANE)
                     .name("&5Dark Purple")
                     .build(),
-                2, 4,
-                "&5", ""
+                2, 5,
+                "&5", "", "jsonmessage.user.dark_purple"
             );
 
             @Value
@@ -209,8 +209,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.WHITE_STAINED_GLASS_PANE)
                     .name("&fWhite")
                     .build(),
-                2, 5,
-                "&f", ""
+                2, 6,
+                "&f", "", "jsonmessage.user.white"
             );
 
             @Value
@@ -218,8 +218,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.LIGHT_GRAY_STAINED_GLASS_PANE)
                     .name("&7Gray")
                     .build(),
-                2, 6,
-                "&7", ""
+                2, 7,
+                "&7", "", "jsonmessage.user.gray"
             );
 
             @Value
@@ -227,8 +227,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.GRAY_STAINED_GLASS_PANE)
                     .name("&8Dark Gray")
                     .build(),
-                2, 7,
-                "&8", ""
+                3, 1,
+                "&8", "", "jsonmessage.user.dark_gray"
             );
 
             @Value
@@ -236,8 +236,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.BLACK_STAINED_GLASS_PANE)
                     .name("&9Blue")
                     .build(),
-                3, 1,
-                "&9", ""
+                3, 2,
+                "&9", "", "jsonmessage.user.black"
             );
 
             @Value
@@ -245,8 +245,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.ORANGE_DYE)
                     .name("&bBold")
                     .build(),
-                4, 3,
-                "", "&b"
+                4, 1,
+                "", "&b", "jsonmessage.user.bold"
             );
 
             @Value
@@ -254,8 +254,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.ORANGE_DYE)
                     .name("&mStrikethrough")
                     .build(),
-                4, 4,
-                "", "&m"
+                4, 3,
+                "", "&m", "jsonmessage.user.strikethrough"
             );
 
             @Value
@@ -264,7 +264,7 @@ public final class MenuFile extends BukkitManaged {
                     .name("&nUnderline")
                     .build(),
                 4, 5,
-                "", "&n"
+                "", "&n", "jsonmessage.user.underline"
             );
 
             @Value
@@ -272,8 +272,8 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.ORANGE_DYE)
                     .name("&oItalic")
                     .build(),
-                4, 6,
-                "", "&o"
+                4, 7,
+                "", "&o", "jsonmessage.user.italic"
             );
 
             @Value
@@ -281,8 +281,7 @@ public final class MenuFile extends BukkitManaged {
                 BukkitItemBuilder.of(XMaterial.ORANGE_DYE)
                     .name("&rReset")
                     .build(),
-                4, 7,
-                "", "&r"
+                5, 4
             );
 
         }

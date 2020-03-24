@@ -31,17 +31,22 @@ public final class FileElement {
     @NotNull
     private final String formatCode;
 
+    @NotNull
+    private final String permission;
+
     public FileElement(@NotNull final ItemStack itemStack, final int row, final int column) {
-        this(itemStack, row, column, "", "");
+        this(itemStack, row, column, "", "", "");
     }
 
     public FileElement(@NotNull final ItemStack itemStack, final int row, final int column,
-                       @NotNull final String colorCode, @NotNull final String formatCode) {
+                       @NotNull final String colorCode, @NotNull final String formatCode,
+                       @NotNull final String permission) {
         this.itemStack = itemStack;
         this.row = row;
         this.column = column;
         this.colorCode = colorCode;
         this.formatCode = formatCode;
+        this.permission = permission;
     }
 
     public FileElement(@NotNull final FileElement fileElement) {
@@ -50,8 +55,14 @@ public final class FileElement {
             fileElement.row,
             fileElement.column,
             fileElement.colorCode,
-            fileElement.formatCode
+            fileElement.formatCode,
+            fileElement.permission
         );
+    }
+
+    @NotNull
+    public String getPermission() {
+        return this.permission;
     }
 
     @NotNull

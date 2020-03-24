@@ -72,7 +72,7 @@ public final class JsonMessage extends JavaPlugin {
                 );
             }
         });
-        manager.registerCommand(new JsonMessageCommand(api));
+        manager.registerCommand(new JsonMessageCommand());
     }
 
 }

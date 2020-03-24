@@ -2,7 +2,10 @@ package io.github.portlek.jsonmessage.handle;
 
 import io.github.portlek.configs.Managed;
 import io.github.portlek.jsonmessage.JsonMessage;
+import java.util.Optional;
 import java.util.UUID;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public final class User {
@@ -20,6 +23,18 @@ public final class User {
         this.formatCode = formatCode;
     }
 
+    public void reset() {
+        this.setColorCode("");
+        this.setFormatCode("");
+    }
+
+    public void save() {
+        final Managed managed = JsonMessage.getAPI().usersFile;
+        final String path = "users." + this.uniqueId.toString() + '.';
+        managed.set(path + "color-code", this.colorCode);
+        managed.set(path + "format-code", this.formatCode);
+    }
+
     @NotNull
     public String getColorCode() {
         return this.colorCode;
@@ -30,11 +45,24 @@ public final class User {
         this.save();
     }
 
-    public void save() {
-        final Managed managed = JsonMessage.getAPI().usersFile;
-        final String path = "users." + this.uniqueId.toString() + '.';
-        managed.set(path + "color-code", this.colorCode);
-        managed.set(path + "format-code", this.formatCode);
+    public boolean underlined() {
+        return this.formatCode.contains("&n");
+    }
+
+    public boolean strikethrough() {
+        return this.formatCode.contains("&m");
+    }
+
+    public boolean italic() {
+        return this.formatCode.contains("&o");
+    }
+
+    public boolean bold() {
+        return this.formatCode.contains("&b");
+    }
+
+    public boolean color() {
+        return !this.colorCode.isEmpty();
     }
 
     @NotNull
@@ -50,6 +78,11 @@ public final class User {
     @NotNull
     public UUID getUniqueId() {
         return this.uniqueId;
+    }
+
+    @NotNull
+    public Optional<Player> getPlayer() {
+        return Optional.ofNullable(Bukkit.getPlayer(this.uniqueId));
     }
 
 }

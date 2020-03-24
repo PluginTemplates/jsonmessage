@@ -49,7 +49,7 @@ public final class ConfigFile extends BukkitManaged {
     public String plugin_language = "en";
 
     @Value
-    public boolean check_for_update = true;
+    public boolean groups_enable = true;
 
     @Override
     public void load() {

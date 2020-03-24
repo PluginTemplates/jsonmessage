@@ -6,25 +6,18 @@ import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
 import io.github.portlek.configs.util.ListToString;
-import io.github.portlek.jsonmessage.JsonMessageAPI;
+import io.github.portlek.jsonmessage.JsonMessage;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.entity.Player;
 
 @CommandAlias("jsonmessage|jm")
 public final class JsonMessageCommand extends BaseCommand {
-
-    @NotNull
-    private final JsonMessageAPI api;
-
-    public JsonMessageCommand(@NotNull final JsonMessageAPI api) {
-        this.api = api;
-    }
 
     @Default
     @CommandPermission("jsonmessage.command.main")
     public void defaultCommand(final CommandSender sender) {
         sender.sendMessage(
-            (String) this.api.languageFile.help_messages.buildMap(list ->
+            (String) JsonMessage.getAPI().languageFile.help_messages.buildMap(list ->
                 new ListToString(list).value()
             )
         );
@@ -34,7 +27,7 @@ public final class JsonMessageCommand extends BaseCommand {
     @CommandPermission("jsonmessage.command.help")
     public void helpCommand(final CommandSender sender) {
         sender.sendMessage(
-            (String) this.api.languageFile.help_messages.buildMap(list ->
+            (String) JsonMessage.getAPI().languageFile.help_messages.buildMap(list ->
                 new ListToString(list).value()
             )
         );
@@ -44,12 +37,18 @@ public final class JsonMessageCommand extends BaseCommand {
     @CommandPermission("jsonmessage.command.reload")
     public void reloadCommand(final CommandSender sender) {
         final long millis = System.currentTimeMillis();
-        this.api.reloadPlugin(false);
+        JsonMessage.getAPI().reloadPlugin(false);
         sender.sendMessage(
-            this.api.languageFile.generals.reload_complete.build(
+            JsonMessage.getAPI().languageFile.generals.reload_complete.build(
                 "%ms%", () -> String.valueOf(System.currentTimeMillis() - millis)
             )
         );
+    }
+
+    @Subcommand("menu")
+    @CommandPermission("jsonmessage.command.menu")
+    public void menuCommand(final Player player) {
+        JsonMessage.getAPI().menuFile.userMenu.inventory(player).open(player);
     }
 
 }
