@@ -6,10 +6,7 @@ import io.github.portlek.configs.annotations.Instance;
 import io.github.portlek.configs.annotations.Section;
 import io.github.portlek.configs.util.FileType;
 import io.github.portlek.jsonmessage.handle.User;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import org.jetbrains.annotations.NotNull;
 
 @Config(
@@ -30,7 +27,7 @@ public final class UsersFile extends BukkitManaged {
             final User user = new User(
                 uuid,
                 "",
-                ""
+                new ArrayList<>()
             );
             UsersFile.DATA.put(uuid, user);
             user.save();
@@ -50,7 +47,7 @@ public final class UsersFile extends BukkitManaged {
                     new User(
                         uuid,
                         this.getOrSet("users." + s + ".color-code", ""),
-                        this.getOrSet("users." + s + ".format-code", "")
+                        this.getOrSet("users." + s + ".format-code", new ArrayList<>())
                     )
                 );
             })

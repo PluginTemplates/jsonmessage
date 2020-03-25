@@ -2,6 +2,7 @@ package io.github.portlek.jsonmessage;
 
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.ConditionFailedException;
+import io.github.portlek.jsonmessage.commands.FarbeCommand;
 import io.github.portlek.jsonmessage.commands.JsonMessageCommand;
 import io.github.portlek.jsonmessage.papi.JMPlaceholder;
 import java.util.Optional;
@@ -73,6 +74,7 @@ public final class JsonMessage extends JavaPlugin {
             }
         });
         manager.registerCommand(new JsonMessageCommand());
+        manager.registerCommand(new FarbeCommand());
     }
 
 }

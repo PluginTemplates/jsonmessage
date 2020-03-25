@@ -2,6 +2,8 @@ package io.github.portlek.jsonmessage.handle;
 
 import io.github.portlek.configs.Managed;
 import io.github.portlek.jsonmessage.JsonMessage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.bukkit.Bukkit;
@@ -15,9 +17,9 @@ public final class User {
 
     private String colorCode;
 
-    private String formatCode;
+    private List<String> formatCode;
 
-    public User(@NotNull final UUID uniqueId, final String colorCode, final String formatCode) {
+    public User(@NotNull final UUID uniqueId, final String colorCode, final List<String> formatCode) {
         this.uniqueId = uniqueId;
         this.colorCode = colorCode;
         this.formatCode = formatCode;
@@ -39,6 +41,8 @@ public final class User {
             case "&a":
                 return "green";
             case "&b":
+                return "aqua";
+            case "&3":
                 return "dark_aqua";
             case "&1":
                 return "dark_blue";
@@ -63,7 +67,7 @@ public final class User {
 
     public void reset() {
         this.setColorCode("");
-        this.setFormatCode("");
+        this.setFormatCode(new ArrayList<>());
     }
 
     public void save() {
@@ -104,11 +108,11 @@ public final class User {
     }
 
     @NotNull
-    public String getFormatCode() {
+    public List<String> getFormatCode() {
         return this.formatCode;
     }
 
-    public void setFormatCode(@NotNull final String formatCode) {
+    public void setFormatCode(@NotNull final List<String> formatCode) {
         this.formatCode = formatCode;
         this.save();
     }

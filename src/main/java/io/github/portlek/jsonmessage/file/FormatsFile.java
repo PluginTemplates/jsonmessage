@@ -39,6 +39,9 @@ public final class FormatsFile extends BukkitManaged {
     @Instance
     public final FormatsFile.Groups groups = new FormatsFile.Groups();
 
+    @Instance
+    public final FormatsFile.Template template = new FormatsFile.Template();
+
     @NotNull
     public static Optional<Group> getByName(@NotNull final String name) {
         return Optional.ofNullable(FormatsFile.GROUPS.get(name));
@@ -52,60 +55,7 @@ public final class FormatsFile extends BukkitManaged {
         final FormatFile defaultPlayer = new FormatFile(this.createManaged(this.def.player));
         final FormatFile defaultSuffix = new FormatFile(this.createManaged(this.def.suffix));
         final FormatFile defaultMessage = new FormatFile(this.createManaged(this.def.message));
-        if (!defaultPrefix.getManaged().getSection("components").isPresent()) {
-            final Managed managed = defaultPrefix.getManaged();
-            managed.set("components.0.text", "[");
-            managed.set("components.0.color", "gold");
-            managed.set("components.0.hover.action", "SHOW_TEXT");
-            managed.set("components.0.hover.value", "This is prefix");
-            managed.set("components.1.text", "Guest");
-            managed.set("components.1.hover.action", "SHOW_TEXT");
-            managed.set("components.1.hover.value", "This is prefix");
-            managed.set("components.2.text", "] ");
-            managed.set("components.2.color", "gold");
-            managed.set("components.2.hover.action", "SHOW_TEXT");
-            managed.set("components.2.hover.value", "This is suffix");
-        }
-        if (!defaultPlayer.getManaged().getSection("components").isPresent()) {
-            final Managed managed = defaultPlayer.getManaged();
-            managed.set("components.0.text", "%player_name% ");
-            managed.set("components.0.color", "gray");
-            managed.set("components.0.hover.action", "SHOW_TEXT");
-            managed.set("components.0.hover.value", "&7Player name > &e%player_name%\n&7Player money > &e%vault_eco_balance%");
-            managed.set("components.0.click.action", "RUN_CONSUMER");
-            managed.set("components.0.click.commands.0.as-player", false);
-            managed.set("components.0.click.commands.0.placeholderapi-mode", "clicker");
-            managed.set("components.0.click.commands.0.values", Arrays.asList(
-                "give %player_name% apple",
-                "msg %player_name% You clicked the message of %writer% and gain rewards"
-            ));
-            managed.set("components.0.click.commands.1.as-player", false);
-            managed.set("components.0.click.commands.1.placeholderapi-mode", "writer");
-            managed.set("components.0.click.commands.1.values", Arrays.asList(
-                "give %player_name% apple",
-                "msg %player_name% %clicker% clicked your message and gain rewards"
-            ));
-        }
-        if (!defaultSuffix.getManaged().getSection("components").isPresent()) {
-            final Managed managed = defaultSuffix.getManaged();
-            managed.set("components.0.text", "> ");
-            managed.set("components.0.color", "reset");
-        }
-        if (!defaultMessage.getManaged().getSection("components").isPresent()) {
-            final Managed managed = defaultMessage.getManaged();
-            managed.set("components.0.text", "%message%");
-            managed.set("components.0.color", "yellow");
-            managed.set("components.0.hover.action", "SHOW_TEXT");
-            managed.set("components.0.hover.value", "&7Player message > &e%message%");
-            managed.set("components.0.hover.value", "&7Player message > &e%message%");
-            managed.set("components.0.click.action", "RUN_CONSUMER");
-            managed.set("components.0.click.remove-after-click", true);
-            managed.set("components.0.click.commands.0.as-player", false);
-            managed.set("components.0.click.commands.0.placeholderapi-mode", "writer");
-            managed.set("components.0.click.commands.0.values", Collections.singletonList(
-                "msg %player_name% %clicker% clicked your message!"
-            ));
-        }
+        this.createDefaultValues(defaultPrefix, defaultPlayer, defaultSuffix, defaultMessage);
         FormatsFile.GROUPS.put(
             "default_group",
             new Group(
@@ -126,6 +76,7 @@ public final class FormatsFile extends BukkitManaged {
                 final FormatFile player = new FormatFile(this.createManaged(this.getOrSet("groups." + s + ".player", s + "_player")));
                 final FormatFile suffix = new FormatFile(this.createManaged(this.getOrSet("groups." + s + ".suffix", s + "_suffix")));
                 final FormatFile message = new FormatFile(this.createManaged(this.getOrSet("groups." + s + ".message", s + "_message")));
+                    this.createDefaultValues(prefix, player, suffix, message);
                 FormatsFile.GROUPS.put(
                     s,
                     new Group(
@@ -161,6 +112,34 @@ public final class FormatsFile extends BukkitManaged {
         return managed;
     }
 
+    public void createDefaultValues(@NotNull final FormatFile prefix, @NotNull final FormatFile player, @NotNull final FormatFile suffix,
+                                    @NotNull final FormatFile message) {
+        if (!prefix.getManaged().getSection("components").isPresent()) {
+            final Managed managed = prefix.getManaged();
+            this.getOrCreateSection("template.prefix").ifPresent(section ->
+                section.getValues(true).forEach(managed::set)
+            );
+        }
+        if (!player.getManaged().getSection("components").isPresent()) {
+            final Managed managed = player.getManaged();
+            this.getOrCreateSection("template.player").ifPresent(section ->
+                section.getValues(true).forEach(managed::set)
+            );
+        }
+        if (!suffix.getManaged().getSection("components").isPresent()) {
+            final Managed managed = suffix.getManaged();
+            this.getOrCreateSection("template.suffix").ifPresent(section ->
+                section.getValues(true).forEach(managed::set)
+            );
+        }
+        if (!message.getManaged().getSection("components").isPresent()) {
+            final Managed managed = message.getManaged();
+            this.getOrCreateSection("template.message").ifPresent(section ->
+                section.getValues(true).forEach(managed::set)
+            );
+        }
+    }
+
     @NotNull
     public Optional<Group> findGroupByPlayer(@NotNull final Player player) {
         final Optional<Wrapped> groupManager = JsonMessage.getAPI().configFile.getWrapped("GroupManager");
@@ -184,20 +163,57 @@ public final class FormatsFile extends BukkitManaged {
             .findFirst();
     }
 
-    @Section(path = "default_sroup")
+    @Section(path = "template")
+    public static final class Template {
+
+        @Instance
+        public final FormatsFile.Template.Prefix prefix = new FormatsFile.Template.Prefix();
+
+        @Instance
+        public final FormatsFile.Template.Player player = new FormatsFile.Template.Player();
+
+        @Instance
+        public final FormatsFile.Template.Suffix suffix = new FormatsFile.Template.Suffix();
+
+        @Instance
+        public final FormatsFile.Template.Message message = new FormatsFile.Template.Message();
+
+        @Section(path = "prefix")
+        public static final class Prefix {
+
+        }
+
+        @Section(path = "player")
+        public static final class Player {
+
+        }
+
+        @Section(path = "suffix")
+        public static final class Suffix {
+
+        }
+
+        @Section(path = "message")
+        public static final class Message {
+
+        }
+
+    }
+
+    @Section(path = "default_group")
     public static final class Default {
 
         @Value
-        public String prefix = "default_prefix";
+        public String prefix = "default_group_prefix";
 
         @Value
-        public String player = "default_player";
+        public String player = "default_group_player";
 
         @Value
-        public String suffix = "default_suffix";
+        public String suffix = "default_group_suffix";
 
         @Value
-        public String message = "default_message";
+        public String message = "default_group_message";
 
     }
 

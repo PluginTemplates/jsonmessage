@@ -42,7 +42,7 @@ public final class JMPlaceholder extends PlaceholderExpansion {
             return user.getColorCode();
         }
         if ("player_format_code".equals(identifier)) {
-            return user.getFormatCode();
+            return user.getFormatCode().toString();
         }
         return "";
     }

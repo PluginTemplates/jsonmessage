@@ -89,7 +89,13 @@ spigot {
             permission = 'jsonmessage.command.main'
             permissionMessage = 'You do not have permission!'
             usage = '/<command> [help|reload|version]'
-            aliases = ['bjg']
+            aliases = ['jm']
+        }
+        farbe {
+            description = 'Farbe command of the plugin.'
+            permission = 'jsonmessage.command.farbe'
+            permissionMessage = 'You do not have permission!'
+            usage = '/<command>'
         }
     }
     permissions {

@@ -5,6 +5,8 @@ import fr.minuskube.inv.content.InventoryProvider;
 import io.github.portlek.jsonmessage.JsonMessage;
 import io.github.portlek.jsonmessage.handle.User;
 import io.github.portlek.jsonmessage.util.FileElement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -162,13 +164,15 @@ public final class UserMenuProvider implements InventoryProvider {
             .forEach(element -> {
                 element.insert(contents, event -> {
                     event.setCancelled(true);
-                    user.setFormatCode(element.getFormatCode());
+                    final List<String> formatCode = new ArrayList<>(user.getFormatCode());
+                    formatCode.add(element.getFormatCode());
+                    user.setFormatCode(formatCode);
                     contents.inventory().open(player);
                 });
                 final boolean check;
                 final int row;
                 final int column;
-                if (!user.getFormatCode().isEmpty() && element.getFormatCode().equals(user.getFormatCode())) {
+                if (!user.getFormatCode().isEmpty() && user.getFormatCode().contains(element.getFormatCode())) {
                     row = element.getRow();
                     column = element.getColumn();
                     check = true;
