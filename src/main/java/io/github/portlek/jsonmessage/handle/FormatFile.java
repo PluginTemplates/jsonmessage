@@ -46,7 +46,7 @@ public final class FormatFile {
         this.managed.getOrCreateSection("components").ifPresent(section ->
             section.getKeys(false).forEach(key ->
                 messages.add(new Message(
-                    (user, message) -> this.replaceAll(user, this.managed.getOrSet("components." + key + ".text", ""), message),
+                    (user, message) -> this.replaceAll(user, this.managed.getOrSet("components." + key + ".text", ""), message, ismessage),
                     (user, message) -> this.parseFeatures(user, message, key, ismessage)
                 ))
             )
@@ -55,7 +55,8 @@ public final class FormatFile {
     }
 
     @NotNull
-    private String replaceAll(@NotNull final User user, @NotNull final String text, @NotNull final String message) {
+    private String replaceAll(@NotNull final User user, @NotNull final String text, @NotNull final String message,
+                              final boolean ismessage) {
         final Optional<Player> optional = user.getPlayer();
         if (!optional.isPresent()) {
             return "";
@@ -69,6 +70,9 @@ public final class FormatFile {
             );
         } else {
             finalMessage = text;
+        }
+        if (user.rainbow() && ismessage) {
+            return this.rainbow(this.replaceAll(finalMessage, optional.get(), message));
         }
         return this.replaceAll(finalMessage, optional.get(), message);
     }
@@ -254,6 +258,31 @@ public final class FormatFile {
                 .replace("%player_name%", player.getName())
                 .replace("%message%", message)
         ).value();
+    }
+
+    @NotNull
+    public String rainbow(@NotNull final String message) {
+        final char[] colors = JsonMessage.getAPI().configFile.rainbow_sequence.toCharArray();
+        final char[] msgchars = message.toCharArray();
+        int currentColorIndex = 0;
+        final StringBuilder sb = new StringBuilder();
+        for (final char msgchar : msgchars) {
+            if (currentColorIndex == colors.length) {
+                currentColorIndex = 0;
+            }
+            if (msgchar == ' ') {
+                sb.append(' ');
+            } else {
+                sb.append('&').append(colors[currentColorIndex]).append(msgchar);
+                currentColorIndex++;
+            }
+        }
+        return ColorUtil.colored(sb.toString());
+    }
+
+    @NotNull
+    private String replaceAll(@NotNull final User user, @NotNull final String text, @NotNull final String message) {
+        return this.replaceAll(user, text, message, false);
     }
 
     @NotNull

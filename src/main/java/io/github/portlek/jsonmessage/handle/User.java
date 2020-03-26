@@ -15,14 +15,22 @@ public final class User {
     @NotNull
     private final UUID uniqueId;
 
+    private boolean rainbow;
+
     private String colorCode;
 
     private List<String> formatCode;
 
-    public User(@NotNull final UUID uniqueId, final String colorCode, final List<String> formatCode) {
+    public User(@NotNull final UUID uniqueId, final String colorCode, final List<String> formatCode,
+                final boolean rainbow) {
         this.uniqueId = uniqueId;
         this.colorCode = colorCode;
         this.formatCode = formatCode;
+        this.rainbow = rainbow;
+    }
+
+    public boolean rainbow() {
+        return this.rainbow;
     }
 
     @NotNull
@@ -70,11 +78,18 @@ public final class User {
         this.setFormatCode(new ArrayList<>());
     }
 
+    public void setRainbow(final boolean rainbow) {
+        this.rainbow = rainbow;
+        this.colorCode = "";
+        this.save();
+    }
+
     public void save() {
         final Managed managed = JsonMessage.getAPI().usersFile;
         final String path = "users." + this.uniqueId.toString() + '.';
         managed.set(path + "color-code", this.colorCode);
         managed.set(path + "format-code", this.formatCode);
+        managed.set(path + "rainbow", this.rainbow);
     }
 
     @NotNull
@@ -83,6 +98,7 @@ public final class User {
     }
 
     public void setColorCode(@NotNull final String colorCode) {
+        this.setRainbow(false);
         this.colorCode = colorCode;
         this.save();
     }

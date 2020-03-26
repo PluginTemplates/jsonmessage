@@ -76,6 +76,7 @@ public final class MenuFile extends BukkitManaged {
                         this.elements.gray,
                         this.elements.dark_gray,
                         this.elements.black,
+                        this.elements.rainbow,
                         this.elements.bold,
                         this.elements.strikethrough,
                         this.elements.underline,
@@ -238,6 +239,14 @@ public final class MenuFile extends BukkitManaged {
                     .build(),
                 3, 2,
                 "&0", "", "jsonmessage.user.black"
+            );
+
+            @Value
+            public FileElement rainbow = new FileElement(
+                BukkitItemBuilder.of(XMaterial.GREEN_DYE)
+                    .name("&aR&ba&ci&dn&eb&1o&2w")
+                    .build(),
+                3, 3
             );
 
             @Value

@@ -27,7 +27,8 @@ public final class UsersFile extends BukkitManaged {
             final User user = new User(
                 uuid,
                 "",
-                new ArrayList<>()
+                new ArrayList<>(),
+                false
             );
             UsersFile.DATA.put(uuid, user);
             user.save();
@@ -47,7 +48,8 @@ public final class UsersFile extends BukkitManaged {
                     new User(
                         uuid,
                         this.getOrSet("users." + s + ".color-code", ""),
-                        this.getOrSet("users." + s + ".format-code", new ArrayList<>())
+                        this.getOrSet("users." + s + ".format-code", new ArrayList<>()),
+                        this.getOrSet("users." + s + ".rainbow", false)
                     )
                 );
             })

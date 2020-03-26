@@ -65,6 +65,9 @@ public final class UserMenuProvider implements InventoryProvider {
     public final FileElement black;
 
     @NotNull
+    public final FileElement rainbow;
+
+    @NotNull
     public final FileElement bold;
 
     @NotNull
@@ -96,6 +99,7 @@ public final class UserMenuProvider implements InventoryProvider {
                             @NotNull final FileElement gray,
                             @NotNull final FileElement dark_gray,
                             @NotNull final FileElement black,
+                            @NotNull final FileElement rainbow,
                             @NotNull final FileElement bold,
                             @NotNull final FileElement strikethrough,
                             @NotNull final FileElement underline,
@@ -118,6 +122,7 @@ public final class UserMenuProvider implements InventoryProvider {
         this.gray = gray;
         this.dark_gray = dark_gray;
         this.black = black;
+        this.rainbow = rainbow;
         this.bold = bold;
         this.strikethrough = strikethrough;
         this.underline = underline;
@@ -128,6 +133,16 @@ public final class UserMenuProvider implements InventoryProvider {
     @Override
     public void init(final Player player, final InventoryContents contents) {
         final User user = JsonMessage.getAPI().usersFile.getOrCreateUser(player.getUniqueId());
+        if (player.hasPermission("jsonmessage.use.rainbow")) {
+            this.rainbow.insert(contents, event -> {
+                event.setCancelled(true);
+                user.setRainbow(true);
+                contents.inventory().open(player);
+            });
+            if (user.rainbow()) {
+                contents.set(this.rainbow.getRow(), this.rainbow.getColumn(), this.chosen.clickableItem(event -> event.setCancelled(true)));
+            }
+        }
         Stream.of(this.dark_red, this.red, this.gold, this.yellow,
             this.dark_green, this.green, this.aqua, this.dark_aqua,
             this.dark_blue, this.blue, this.light_purple, this.dark_purple,

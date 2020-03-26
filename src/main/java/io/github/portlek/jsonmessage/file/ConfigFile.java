@@ -51,6 +51,9 @@ public final class ConfigFile extends BukkitManaged {
     @Value
     public boolean groups_enable = true;
 
+    @Value
+    public String rainbow_sequence = "abcde";
+
     @Override
     public void load() {
         super.load();
